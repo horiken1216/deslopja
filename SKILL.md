@@ -16,6 +16,10 @@ pattern catalogs in `references/`.
 - **Detect only**: when the user asks to judge/score/measure ("slop率は？", "判定だけ",
   "how AI-like is this?"), report the measurement and stop. Offer to fix, but don't rewrite
   unasked
+- **Proactive self-check** (before delivering Claude's own long-form drafts, or the lightweight
+  Japanese conversational check): run detect & fix silently. Don't print the slop-rate report
+  or before/after comparison — just deliver the cleaned text, unless the user asks to see the
+  measurement
 
 ## Workflow
 
@@ -25,8 +29,9 @@ pattern catalogs in `references/`.
    - Other languages → apply the universal categories below directly, instantiating them
      from your knowledge of that language's AI-writing clichés
 2. **Detect**: list every occurrence that matches a category, grouped by category
-3. **Measure and report the slop score** (see Measurement below) BEFORE touching the text.
-   In detect-only mode, stop here
+3. **Measure the slop score** (see Measurement below) BEFORE touching the text. In detect-only
+   mode, report it now and stop. In fix mode, hold it — it becomes the "before" half of the
+   step 7 report, so don't print it twice
 4. **Build a protection list**: identify expressions unique to this text — original metaphors,
    deliberate repetitions (e.g., a title echoed in the closing), the author's idiosyncratic
    phrasings. These are off-limits. Slop is a problem of *formula and frequency*, not of
@@ -36,7 +41,7 @@ pattern catalogs in `references/`.
    Never add ornamentation to "fix" plainness
 6. **Verify**: re-measure the rewritten text, run the rhythm check and the five-dimension
    self-score below
-7. **Report the diff**: before/after slop scores, what was changed and why, grouped by
+7. **Report the comparison**: before/after slop scores, what was changed and why, grouped by
    category, with counts
 
 ## Measurement
@@ -60,12 +65,20 @@ Severity bands:
 | 25–50%    | High — clearly AI-flavored; full rewrite pass |
 | > 50%     | Severe — formulaic throughout; consider redrafting from the argument up |
 
-Report format (always show before rewriting; show before→after when fixing):
+Report format (always show before rewriting; show before→after when fixing). Report in the
+language of the source text — the examples below are illustrative, not a fixed template:
 
 ```
 Slop率: 34% (12/35文)  判定: High
 パターン総数: 19件 (密度 0.54/文)
-内訳: 記号3 / メタ実況4 / 紋切り6 / 構造型2 / 偽主語1 / リズム2 / ヘッジ1 / 希薄化0
+内訳: 記号3 / メタ前置き4 / 紋切り6 / 構造2 / 偽主語1 / 文末リズム2 / ヘッジ1 / 希薄化0
+```
+
+```
+Slop rate: 34% (12/35 sentences)  Verdict: High
+Pattern count: 19 (density 0.54/sentence)
+Breakdown: Typographic 3 / Meta-commentary 4 / Stock phrases 6 / Structural 2 /
+False agency 1 / Rhythm 2 / Hedging 1 / Dilution 0
 ```
 
 Caveats to state when reporting: this is an LLM judgment against a finite catalog, not a
@@ -78,7 +91,11 @@ high while edited AI text scores low.
 ## Universal slop categories
 
 These eight failure modes appear in every language. The reference files map each to
-concrete surface patterns.
+concrete surface patterns. `references/japanese.md` additionally covers translation-artifact
+patterns outside the eight categories, because Japanese AI prose is frequently produced via
+literal translation from English discourse structure; this is a deliberate asymmetry, not a
+gap in `references/english.md` — apply categories 1–8 directly to any translationese you spot
+in English source text.
 
 ### 1. Typographic and punctuation tics
 Overused marks that have become AI signatures: a particular dash, excessive quotation-mark

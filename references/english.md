@@ -79,3 +79,7 @@ Delete the announcement; start with the content.
 - Wh-word sentence openers ("What makes this hard is...") read as a crutch when frequent;
   occasional use is fine — judge by frequency, not by rule
 - Active voice is usually tighter, but don't mechanically convert every passive
+- No dedicated translation-artifact section here (contrast `references/japanese.md`'s
+  structural-slop appendix): if the source text is a literal translation into English from
+  an SOV or agglutinative language, apply categories 1–8 directly rather than expecting a
+  separate catalog
