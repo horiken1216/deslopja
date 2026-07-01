@@ -6,12 +6,14 @@ A Claude skill that detects and removes formulaic AI-writing patterns — "slop"
 
 ## What it does
 
-AI-generated prose converges on recognizable tics: meta-commentary that announces what a sentence is about to do, dead metaphors, mechanical "not X but Y" scaffolding, hedging chains, monotonous rhythm. The underlying failure modes are the same across languages; only their surface forms differ. `deslop` defines one language-independent detection and rewriting process, backed by per-language pattern catalogs.
+AI-generated prose converges on recognizable tics: meta-commentary that announces what a sentence is about to do, dead metaphors, mechanical "not X but Y" scaffolding, hedging chains, monotonous rhythm. The underlying failure modes are the same across languages; only their surface forms differ. `deslop` defines one language-independent detection and rewriting process, with dedicated pattern catalogs for English and Japanese (other languages fall back to the eight universal categories below).
 
 It works in two modes:
 
-- **Detect & fix** (default) — measure the slop rate, report it, rewrite with the priority *delete > compress > replace*, then re-measure and show the before/after diff.
+- **Detect & fix** (default) — list every detected occurrence by category, measure the slop rate, build a protection list of expressions to preserve, rewrite with the priority *delete > compress > replace*, then re-measure, run a five-dimension self-score, and report a before/after change summary.
 - **Detect only** — when you just want a score ("how AI-like is this?"), it reports the measurement and stops.
+
+It can also run unprompted: Claude is expected to self-check any long-form document it drafts before delivering it, even without being asked, and to run a lighter version of this check on its own Japanese conversational replies.
 
 ## The slop rate
 
@@ -47,11 +49,11 @@ This is an LLM judgment against a finite catalog, not a deterministic detector. 
 - `references/english.md` — English pattern catalog.
 - `references/japanese.md` — Japanese pattern catalog (translationese, over-explicit connectives, formulaic openers, 終助詞 balance, and more).
 
-Other languages are handled by applying the eight universal categories directly.
+Languages without a dedicated catalog are handled by applying the eight universal categories directly.
 
 ## Usage
 
-Install as a Claude skill and invoke it by asking to remove AI-sounding style, humanize or proofread a draft, or score text for slop — in any language ("make this sound less AI", "自然な文章に", "slop率を出して").
+Install as a Claude skill and invoke it by asking to remove AI-sounding style, humanize or proofread a draft, or score text for slop — in any language ("make this sound less AI", "自然な文章に", "slop率を出して"). It also fires automatically before Claude delivers its own long-form drafts, and as a lightweight check on its Japanese conversational replies, without needing to be asked.
 
 ## Acknowledgements
 
