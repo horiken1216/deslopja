@@ -56,3 +56,7 @@ Install as a Claude skill and invoke it by asking to remove AI-sounding style, h
 ## Acknowledgements
 
 The category framework extends ideas from [stop-slop](https://github.com/hardikpandya/stop-slop) (MIT) — in particular the false-agency, negative-listing, narrator-from-a-distance, and pull-quote concepts, and the five-dimension scoring rubric — generalizing them across languages and replacing absolute bans with frequency-based judgment.
+
+## License
+
+[MIT](LICENSE)
